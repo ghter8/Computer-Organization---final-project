@@ -98,6 +98,10 @@ def config_cache(options, system):
                                        size=options.l3_size,
                                        assoc=options.l3_assoc)
             system.tol3bus = L3XBar(clk_domain = system.cpu_clk_domain)
+
+            print("\nL3 cache enabled.\n")
+            print("L3 Cache Size: %s" % options.l3_size)
+            print("L3 Cache Associativity: %s-way" % options.l3_assoc)
             
             system.l2.mem_side = system.tol3bus.slave
             system.l3.cpu_side = system.tol3bus.master
