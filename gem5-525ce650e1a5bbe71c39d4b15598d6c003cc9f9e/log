@@ -2,9 +2,15 @@ gem5 Simulator System.  http://gem5.org
 gem5 is copyrighted software; use the --copyright option for details.
 
 gem5 compiled Jun  2 2026 18:03:06
-gem5 started Jun  2 2026 18:08:19
-gem5 executing on 0eb29f744c29, pid 134
+gem5 started Jun  2 2026 19:24:48
+gem5 executing on 0eb29f744c29, pid 400
 command line: ./build/X86/gem5.opt configs/example/se.py -c tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --caches --l2cache --l3cache --mem-type=NVMainMemory --nvmain-config=../NVmain/Config/PCM_ISSCC_2012_4GB.config
+
+====================================================
+L3 cache enabled.
+L3 Cache Size: 16MB
+L3 Cache Associativity: 16-way
+====================================================
 
 Global frequency set at 1000000000000 ticks per second
 NVMainControl: Reading NVMain config file: ../NVmain/Config/PCM_ISSCC_2012_4GB.config.
