@@ -319,7 +319,18 @@ Cache::handleTimingReqHit(PacketPtr pkt, CacheBlk *blk, Tick request_time)
     // lookup
     assert(!pkt->req->isUncacheable());
 
+    bool is_write = pkt->isWrite();
+
     BaseCache::handleTimingReqHit(pkt, blk, request_time);
+
+    if (is_write && blk && blk->isValid() && blk->isDirty()) {
+        PacketPtr wb_pkt = writebackBlk(blk);
+        if (wb_pkt) {
+            wb_pkt->cmd = MemCmd::WriteClean;
+            allocateWriteBuffer(wb_pkt, clockEdge(forwardLatency));
+        }
+        blk->status &= ~BlkDirty;
+    }
 }
 
 void
@@ -842,6 +853,15 @@ Cache::serviceMSHRTargets(MSHR *mshr, const PacketPtr pkt, CacheBlk *blk,
             invalidateBlock(blk);
         } else if (mshr->hasPostDowngrade()) {
             blk->status &= ~BlkWritable;
+        }
+
+        if (blk->isValid() && blk->isDirty()) {
+            PacketPtr wb_pkt = writebackBlk(blk);
+            if (wb_pkt) {
+                wb_pkt->cmd = MemCmd::WriteClean; 
+                writebacks.push_back(wb_pkt);
+            }
+            blk->status &= ~BlkDirty;
         }
     }
 }
