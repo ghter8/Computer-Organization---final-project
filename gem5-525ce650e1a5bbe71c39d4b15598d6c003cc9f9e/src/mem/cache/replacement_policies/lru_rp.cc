@@ -44,9 +44,6 @@ void
 LRURP::invalidate(const std::shared_ptr<ReplacementData>& replacement_data)
 const
 {
-    auto data = std::static_pointer_cast<LRUReplData>(replacement_data);
-    data->lastTouchTick = Tick(0);
-    data->frequency = 0;
     // Reset last touch timestamp
     std::static_pointer_cast<LRUReplData>(
         replacement_data)->lastTouchTick = Tick(0);
@@ -55,19 +52,17 @@ const
 void
 LRURP::touch(const std::shared_ptr<ReplacementData>& replacement_data) const
 {
-    auto data = std::static_pointer_cast<LRUReplData>(replacement_data);
-    data->lastTouchTick = curTick();
-    data->frequency++;
-    // Update last touch timestamp and increase frequency
+    // Update last touch timestamp
+    std::static_pointer_cast<LRUReplData>(
+        replacement_data)->lastTouchTick = curTick();
 }
 
 void
 LRURP::reset(const std::shared_ptr<ReplacementData>& replacement_data) const
 {
-    auto data = std::static_pointer_cast<LRUReplData>(replacement_data);
-    data->lastTouchTick = curTick();
-    data->frequency = 1;
-    // Set last touch timestamp and reset frequency to 1
+    // Set last touch timestamp
+    std::static_pointer_cast<LRUReplData>(
+        replacement_data)->lastTouchTick = curTick();
 }
 
 ReplaceableEntry*
@@ -81,22 +76,11 @@ LRURP::getVictim(const ReplacementCandidates& candidates) const
     for (const auto& candidate : candidates) {
         // Update victim entry if necessary
         if (std::static_pointer_cast<LRUReplData>(
-                    candidate->replacementData)->frequency <
+                    candidate->replacementData)->lastTouchTick <
                 std::static_pointer_cast<LRUReplData>(
-                    victim->replacementData)->frequency) {
+                    victim->replacementData)->lastTouchTick) {
             victim = candidate;
         }
-        else if(std::static_pointer_cast<LRUReplData>(
-                    candidate->replacementData)->frequency ==
-                std::static_pointer_cast<LRUReplData>(
-                    victim->replacementData)->frequency){
-                        if (std::static_pointer_cast<LRUReplData>(
-                                candidate->replacementData)->lastTouchTick <
-                            std::static_pointer_cast<LRUReplData>(
-                                victim->replacementData)->lastTouchTick) {
-                            victim = candidate;
-                        }
-                    }
     }
 
     return victim;

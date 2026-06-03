@@ -51,8 +51,6 @@ class LRURP : public BaseReplacementPolicy
         /** Tick on which the entry was last touched. */
         Tick lastTouchTick;
 
-        unsigned frequency;
-
         /**
          * Default constructor. Invalidate data.
          */
