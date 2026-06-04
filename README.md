@@ -21,8 +21,32 @@
 
 ## 運行指令:  
 
-*
-*
-*
-*
-*
+* Q1:
+```bash
+./build/X86/gem5.opt configs/example/se.py -c tests/test-progs/hello/bin/x86/linux/hello --cputype=TimingSimpleCPU --caches --l2cache --mem-type=NVMainMemory --nvmainconfig=../NVmain/Config/PCM_ISSCC_2012_4GB.config 2>&1 | tee log
+```
+
+* Q2:
+```bash
+./build/X86/gem5.opt configs/example/se.py -c tests/test-progs/hello/bin/x86/linux/hello --cputype=TimingSimpleCPU --caches --l2cache --l3cache --mem-type=NVMainMemory --nvmainconfig=../NVmain/Config/PCM_ISSCC_2012_4GB.config 2>&1 | tee log
+```
+
+* Q3_2-way:
+```bash
+./build/X86/gem5.opt configs/example/se.py -c quicksort/quicksort --cputype=TimingSimpleCPU ---caches --l2cache --l3cache --l1d_size=4kB --l1i_size=4kB --l2_size=16kB --l3_size=1MB --l3_assoc=2 --mem-type=NVMainMemory --nvmainconfig=../NVmain/Config/PCM_ISSCC_2012_4GB.config 2>&1 | tee log
+```
+
+* Q3_full-way:
+```bash
+./build/X86/gem5.opt configs/example/se.py -c quicksort/quicksort --cputype=TimingSimpleCPU ---caches --l2cache --l3cache --l1d_size=4kB --l1i_size=4kB --l2_size=16kB --l3_size=1MB --l3_assoc=16384 --mem-type=NVMainMemory --nvmainconfig=../NVmain/Config/PCM_ISSCC_2012_4GB.config 2>&1 | tee log
+```
+
+* Q4:
+```bash
+./build/X86/gem5.opt configs/example/se.py -c quicksort/quicksort --cputype=TimingSimpleCPU --caches --l2cache --mem-type=NVMainMemory --nvmainconfig=../NVmain/Config/PCM_ISSCC_2012_4GB.config 2>&1 | tee log
+```
+
+* Q5:
+```bash
+./build/X86/gem5.opt configs/example/se.py -c multiply/multiply --cputype=TimingSimpleCPU --caches --l2cache --l3cache --l3_assoc=4 --mem-type=NVMainMemory --nvmainconfig=../NVmain/Config/PCM_ISSCC_2012_4GB.config 2>&1 | tee log
+```
